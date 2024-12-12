@@ -1,5 +1,7 @@
 package com.dreamgames.backendengineeringcasestudy.controller;
 
+import com.dreamgames.backendengineeringcasestudy.dto.UpdateLevelRequest;
+import com.dreamgames.backendengineeringcasestudy.dto.UpdateLevelResponse;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,5 +48,15 @@ public class UserController {
                 newUser.getCoins(),
                 newUser.getAbGroup()
         );
+    }
+    /**
+     * Endpoint to update user's level after completing a level.
+     *
+     * @param request The request containing user ID and event participation flag.
+     * @return The updated user progress data.
+     */
+    @PostMapping("/updateLevel")
+    public UpdateLevelResponse updateLevel(@RequestBody UpdateLevelRequest request) {
+        return userService.updateLevel(request);
     }
 }
