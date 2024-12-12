@@ -1,6 +1,39 @@
-CREATE TABLE if not exists example_table (
-    id INT PRIMARY KEY,
-    name VARCHAR(255)
+DROP TABLE IF EXISTS pop_balloon_event_invitations;
+DROP TABLE IF EXISTS pop_balloon_event_participation;
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+                       id INT AUTO_INCREMENT PRIMARY KEY,
+                       ab_group VARCHAR(1) NOT NULL CHECK (ab_group IN ('A','B')),
+                       level INT NOT NULL DEFAULT 1,
+                       coins INT NOT NULL DEFAULT 2000,
+                       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO `example_table` (`id`, `name`) VALUES (1, 'example-1'), (2, 'example-2');
+CREATE TABLE pop_balloon_event_participation (
+                                                 id INT AUTO_INCREMENT PRIMARY KEY,
+                                                 user_id INT NOT NULL,
+                                                 partner_user_id INT,
+                                                 has_partner BOOLEAN DEFAULT FALSE,
+                                                 helium_collected INT DEFAULT 0,
+                                                 balloon_inflated_amount INT DEFAULT 0,
+                                                 has_popped BOOLEAN DEFAULT FALSE,
+                                                 reward_claimed BOOLEAN DEFAULT FALSE,
+                                                 event_date DATE NOT NULL,
+                                                 FOREIGN KEY (user_id) REFERENCES users(id),
+                                                 FOREIGN KEY (partner_user_id) REFERENCES users(id)
+);
+
+CREATE TABLE pop_balloon_event_invitations (
+                                               id INT AUTO_INCREMENT PRIMARY KEY,
+                                               inviter_user_id INT NOT NULL,
+                                               invitee_user_id INT NOT NULL,
+                                               status ENUM('PENDING','ACCEPTED','REJECTED') DEFAULT 'PENDING',
+                                               event_date DATE NOT NULL,
+                                               FOREIGN KEY (inviter_user_id) REFERENCES users(id),
+                                               FOREIGN KEY (invitee_user_id) REFERENCES users(id)
+);
+
+CREATE INDEX idx_users_level ON users(level);
+CREATE INDEX idx_invitations_invitee ON pop_balloon_event_invitations(invitee_user_id);
+CREATE INDEX idx_participation_user ON pop_balloon_event_participation(user_id);
