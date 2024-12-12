@@ -1,0 +1,8 @@
+To see the server running: GET
+http://localhost:8080/users/health
+
+To create users: Post
+http://localhost:8080/users
+
+When level is completed, levelup!
+Post-->http://localhost:8080/users/updateLevel
