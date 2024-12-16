@@ -9,11 +9,17 @@ import com.dreamgames.backendengineeringcasestudy.dto.UpdateLevelRequest;
 import com.dreamgames.backendengineeringcasestudy.dto.UpdateLevelResponse;
 import com.dreamgames.backendengineeringcasestudy.entity.AbGroup;
 import com.dreamgames.backendengineeringcasestudy.entity.User;
-import com.dreamgames.backendengineeringcasestudy.service.UserService;
+import com.dreamgames.backendengineeringcasestudy.repository.PopBalloonEventInvitationRepository;
+import com.dreamgames.backendengineeringcasestudy.repository.PopBalloonEventParticipationRepository;
+import com.dreamgames.backendengineeringcasestudy.repository.UserRepository;
+import com.dreamgames.backendengineeringcasestudy.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -29,6 +35,9 @@ class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+
+
 
     @MockBean
     private UserService userService;
@@ -46,14 +55,13 @@ class UserControllerTest {
         userA.setAbGroup(AbGroup.A);
         userA.setLevel(1);
         userA.setCoins(2000);
-        userA.setHelium(0);
 
         userB = new User();
         userB.setId(2);
         userB.setAbGroup(AbGroup.B);
         userB.setLevel(5);
         userB.setCoins(5000);
-        userB.setHelium(20);
+
     }
 
     @Test

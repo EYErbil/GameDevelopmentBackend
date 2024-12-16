@@ -43,9 +43,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
-    // Add more exception handlers as needed
 
-    // Inner class for ErrorResponse
     public static class ErrorResponse {
         private int status;
         private String message;

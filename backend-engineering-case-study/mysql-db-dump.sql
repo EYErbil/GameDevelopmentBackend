@@ -2,13 +2,11 @@ DROP TABLE IF EXISTS pop_balloon_event_invitations;
 DROP TABLE IF EXISTS pop_balloon_event_participation;
 DROP TABLE IF EXISTS users;
 
-
 CREATE TABLE users (
                        id INT AUTO_INCREMENT PRIMARY KEY,
                        ab_group ENUM('A', 'B') NOT NULL,
                        level INT NOT NULL DEFAULT 1,
                        coins INT NOT NULL DEFAULT 2000,
-                       helium INT NOT NULL DEFAULT 0,
                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                        version INT NOT NULL DEFAULT 0,
                        INDEX idx_level (level),

@@ -25,8 +25,7 @@ public class User {
     @Column(name = "coins", nullable = false)
     private int coins = 2000;
 
-    @Column(name = "helium", nullable = false)
-    private int helium = 0;
+
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -85,24 +84,11 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public int getHelium() {
-        return helium;
-    }
 
-    public void setHelium(int helium) {
-        this.helium = helium;
-    }
 
-    // Optionally, add methods to increase/decrease helium
-    public void addHelium(int amount) {
-        this.helium += amount;
-    }
 
-    public void consumeHelium(int amount) {
-        if (this.helium >= amount) {
-            this.helium -= amount;
-        } else {
-            throw new IllegalArgumentException("Not enough helium");
-        }
-    }
+
+
+
+
 }
