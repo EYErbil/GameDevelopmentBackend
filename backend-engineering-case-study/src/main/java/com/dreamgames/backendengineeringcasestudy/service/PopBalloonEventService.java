@@ -222,25 +222,44 @@ public class PopBalloonEventService {
         User user = userRepository.findById(userId).orElseThrow();
         int target = getBalloonTargetForUser(user);
 
-        // Inflate balloon
+        // Inflate balloon for this user
         participation.setHeliumCollected(participation.getHeliumCollected() - heliumToUse);
         participation.setBalloonInflatedAmount(participation.getBalloonInflatedAmount() + heliumToUse);
-        if (participation.getBalloonInflatedAmount() >= target) {
+        participationRepository.save(participation);
+
+        // Fetch partner participation
+        PopBalloonEventParticipation partnerParticipation = participationRepository
+                .findByUserIdAndEventDate(participation.getPartnerUserId(), eventDate)
+                .orElseThrow(() -> new IllegalStateException("Partner participation record not found"));
+
+        // Calculate combined balloon inflated amount
+        int combinedInflation = participation.getBalloonInflatedAmount() + partnerParticipation.getBalloonInflatedAmount();
+
+        // Check for popping condition
+        if (combinedInflation >= target) {
             participation.setHasPopped(true);
-            PopBalloonEventParticipation partnerParticipation = participationRepository
-                    .findByUserIdAndEventDate(participation.getPartnerUserId(), eventDate)
-                    .orElseThrow();
             partnerParticipation.setHasPopped(true);
+
+            participationRepository.save(participation);
             participationRepository.save(partnerParticipation);
         }
 
-        participationRepository.save(participation);
-
+        //Prepare response
         UpdateBalloonProgressResponse response = new UpdateBalloonProgressResponse();
+        // user’s own balloon inflated amount after this operation
         response.setBalloonInflatedAmount(participation.getBalloonInflatedAmount());
         response.setPopped(participation.isHasPopped());
+        // Include user’s contribution (this user’s balloonInflatedAmount)
+        response.setUserContribution(participation.getBalloonInflatedAmount());
+        // Include partner’s contribution
+        response.setPartnerContribution(partnerParticipation.getBalloonInflatedAmount());
+        // Include total combined inflation
+        response.setTotalInflation(combinedInflation);
+
         return response;
     }
+
+
 
     public GetBalloonsInfoResponse getBalloonsInfo(Integer userId) {
         LocalDate eventDate = currentEventDate();

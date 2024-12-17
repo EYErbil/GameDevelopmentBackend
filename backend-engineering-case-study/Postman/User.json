@@ -1,11 +1,11 @@
-Create User
+1) Create User
 Method: POST
 Endpoint: /users
 Body (JSON):
 {}
 Expected Response: 200 OK
 
-Update Level
+2) Update Level
 Method: POST
 Endpoint: /users/updateLevel
 Body (JSON):
@@ -15,4 +15,6 @@ Body (JSON):
 }
 Expected Response: 200 OK
 Returns updated level, coins, and helium (if event joined).
+The "joinedPopTheBalloonEvent" is placeholder, even if it is written as true, if not event joined,
+helium will not increase. when the user joins the event, helium will increase.
 

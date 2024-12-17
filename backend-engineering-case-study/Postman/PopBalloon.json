@@ -1,18 +1,21 @@
-#Most of those will work when the event is active, UTC time after 8 am.
+Most of those will work when the event is active, UTC time after 8 am.
 
-Join Event
+1) Join Event
 Method: POST
 Endpoint: /pop-balloon-event/join?userId={{userId}}
 Expected Response: 200 OK
 User must be level 50+ and have enough coins (2,500).
+        if not, we will get
+"status": 400,
+"message": "User does not meet level requirement to join event",
 
-Get Suggestions and Invitations
+2) Get Suggestions and Invitations
 Method: GET
 Endpoint: /pop-balloon-event/suggestions-and-invitations?userId={{userId}}
 Expected Response: 200 OK
-Returns a list of suggested userIds and pending invitations.
+Returns a list of suggested userIds and pending invitations. But only the ones eligible for event
 
-Invite Partner
+3) Invite Partner
 Method: POST
 Endpoint: /pop-balloon-event/invite
 Body (JSON):
@@ -21,10 +24,10 @@ Body (JSON):
   "inviteeUserId": 2
 }
 Expected Response: 200 OK
+if the inviter is not participating, we get error. This makes sense
 
 
-
-Accept Invitation
+4) Accept Invitation
 Method: POST
 Endpoint: /pop-balloon-event/accept
 Body (JSON):
@@ -34,8 +37,20 @@ Body (JSON):
 }
 Expected Response: 200 OK
 This pairs the two players.
+        extra scenerios: the invitee must participate, if not,
+"status": 409,
+"message": "Invitee not participating in today's event. Must join event first.",
+        the invitation ID must be "existent", if not:
+"status": 400,
+"message": "Invitation not found",
+        the invitation, must of course belong to the invitee, if not:
+"status": 400,
+"message": "This invitation does not belong to you",
+        the invitation can also be rejected and accepted, and client can send extra request:
+"message": "Invitation already accepted or rejected",
+"timestamp": "2024-12-17T20:47:03.876212724"
 
-Reject Invitation
+5) Reject Invitation
 Method: POST
 Endpoint: /pop-balloon-event/reject
 Body (JSON):
@@ -45,8 +60,9 @@ Body (JSON):
 }
 Expected Response: 200 OK
 Invitation is rejected
+        the alternative scenerios are same as accept.
 
-Update Balloon Progress
+6) Update Balloon Progress
 Method: POST
 Endpoint: /pop-balloon-event/updateBalloon
 Body (JSON):
@@ -57,13 +73,18 @@ Body (JSON):
 Expected Response: 200 OK
 Inflates the balloon by 100 helium. Check popped status in response.
 
-Get Balloons Info
+        If the user doesnt have partner:
+"status": 409,
+"message": "User has no partner. Cannot inflate balloon alone.",
+
+
+7) Get Balloons Info
 Method: GET
 Endpoint: /pop-balloon-event/balloonsInfo?userId={{userId}}
 Expected Response: 200 OK
 Returns balloon status, helium collected, partner info, etc.
 
-Claim Reward
+8) Claim Reward
 Method: POST
 Endpoint: /pop-balloon-event/claimReward
 Body (JSON):
@@ -72,5 +93,13 @@ Body (JSON):
 }
 Expected Response: 200 OK
 User receives their reward coins if balloon is popped and not yet claimed.
+If not popped:
+"status": 409,
+"message": "Balloon not popped yet, no reward available",
+If already popped:
+If not popped:
+"status": 409,
+"message": "Balloon popped",
 
 
+This file looks a little bit crowded, I am sorry. The service layer has very detailed error lists.
