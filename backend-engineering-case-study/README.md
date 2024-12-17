@@ -3,14 +3,14 @@
 For Postman API endpoints, check the folder Postman please.
 
 Add brief explanation of how you organized your implementation and the choices you made in terms of design while solving problems
-Overview:
+# Overview:
 
 This repository contains the backend implementation of the user progress management and "Pop The Balloon"
 LiveOps event system, as well as a global leaderboard feature. Users can create profiles,
 progress through levels, participate in a time-limited cooperative event to earn rewards,
  and view a global leaderboard of top players.
 
-Project Structure:
+# Project Structure:
 
 Controllers: REST endpoints for Users, Pop Balloon Event actions, and Leaderboard retrieval.
 
@@ -24,7 +24,7 @@ Services: Core business logic resides here. Handles validation, event state chec
 
 Exception Handling: A global exception handler to return structured error responses.
 
-Key Features and Design Choices
+# Key Features and Design Choices
 User Progress and A/B Testing:
 
 Users start with level=1, coins=2000, randomly assigned to A or B group.
@@ -51,7 +51,7 @@ Use of @Transactional ensures atomic operations during event participation and p
 Scoped queries (like findTop100ByOrderByLevelDesc()) reduce large result sets.
 Potential future improvements might include caching the leaderboard or introducing asynchronous updates.
 
-Testing:
+# Testing:
 
 Extensive unit and integration tests cover:
 User creation and level updates
@@ -61,7 +61,7 @@ Leaderboard retrieval
 Tests use H2 in-memory DB for fast execution.
 Separate tests exist for scenarios with the event active and inactive.
 
-Running the Project:
+# Running the Project:
 
 Prerequisites: Docker and Docker Compose.
 
@@ -78,7 +78,7 @@ Profiles and Configuration:
 application.properties for development and application-test.properties for tests (H2 in-memory DB).
 For production, ensure to point spring.datasource.url to the actual MySQL instance.
 
-Design Choices Rationale
+# Design Choices Rationale
 Spring Boot + JPA: Quickly implement REST endpoints and database integration.
 Random A/B Group: Balanced user distribution for A/B testing.
 Checked Event Activity Times: Provides business logic to ensure correct event lifecycle.
