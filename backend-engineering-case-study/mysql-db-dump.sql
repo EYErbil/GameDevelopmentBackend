@@ -37,6 +37,6 @@ CREATE TABLE pop_balloon_event_invitations (
                                                FOREIGN KEY (invitee_user_id) REFERENCES users(id)
 );
 
-CREATE INDEX idx_users_level ON users(level);
+-- Removed idx_users_level to avoid duplication, my bad!
 CREATE INDEX idx_invitations_invitee ON pop_balloon_event_invitations(invitee_user_id);
 CREATE INDEX idx_participation_user ON pop_balloon_event_participation(user_id);

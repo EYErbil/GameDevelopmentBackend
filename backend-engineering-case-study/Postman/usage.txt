@@ -1,0 +1,8 @@
+### How to Use the Postman Collection
+
+1. Import the `BackendEngineeringCaseStudy.postman_collection.json` file into Postman.
+2. Start the application using `docker-compose up` to launch both the app and MySQL.
+3. Follow the requests in the "User Progress" folder to create and update users.
+4. Proceed to the "Pop Balloon Event" folder to join the event, invite partners, inflate balloons, and claim rewards.
+5. Finally, check the "Leaderboard" folder to verify the top players.
+6. Detailed instructions and expected responses are annotated within each request.

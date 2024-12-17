@@ -1,0 +1,5 @@
+Get Leaderboard
+Method: GET
+Endpoint: /leaderboard
+Expected Response: 200 OK
+Returns top 100 players by level.

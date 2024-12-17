@@ -9,7 +9,9 @@ import java.util.List;
 @EnableJpaRepositories
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    //I will most likely need more when I finish the first part, for now, thats enough
+    List<User> findTop100ByOrderByLevelDesc();
+
+
 
 
 

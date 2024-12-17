@@ -1,0 +1,76 @@
+#Most of those will work when the event is active, UTC time after 8 am.
+
+Join Event
+Method: POST
+Endpoint: /pop-balloon-event/join?userId={{userId}}
+Expected Response: 200 OK
+User must be level 50+ and have enough coins (2,500).
+
+Get Suggestions and Invitations
+Method: GET
+Endpoint: /pop-balloon-event/suggestions-and-invitations?userId={{userId}}
+Expected Response: 200 OK
+Returns a list of suggested userIds and pending invitations.
+
+Invite Partner
+Method: POST
+Endpoint: /pop-balloon-event/invite
+Body (JSON):
+{
+  "inviterUserId": 1,
+  "inviteeUserId": 2
+}
+Expected Response: 200 OK
+
+
+
+Accept Invitation
+Method: POST
+Endpoint: /pop-balloon-event/accept
+Body (JSON):
+{
+  "invitationId": 10,
+  "userId": 2
+}
+Expected Response: 200 OK
+This pairs the two players.
+
+Reject Invitation
+Method: POST
+Endpoint: /pop-balloon-event/reject
+Body (JSON):
+{
+  "invitationId": 11,
+  "userId": 3
+}
+Expected Response: 200 OK
+Invitation is rejected
+
+Update Balloon Progress
+Method: POST
+Endpoint: /pop-balloon-event/updateBalloon
+Body (JSON):
+{
+  "userId": 1,
+  "heliumToUse": 100
+}
+Expected Response: 200 OK
+Inflates the balloon by 100 helium. Check popped status in response.
+
+Get Balloons Info
+Method: GET
+Endpoint: /pop-balloon-event/balloonsInfo?userId={{userId}}
+Expected Response: 200 OK
+Returns balloon status, helium collected, partner info, etc.
+
+Claim Reward
+Method: POST
+Endpoint: /pop-balloon-event/claimReward
+Body (JSON):
+{
+  "userId": 1
+}
+Expected Response: 200 OK
+User receives their reward coins if balloon is popped and not yet claimed.
+
+

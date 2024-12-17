@@ -100,3 +100,7 @@ Request 13: Claim Reward
 POST http://localhost:8080/pop-balloon-event/claimReward
 Body: {"userId":{{userAId}}}
 Check the user’s coins increased by the reward.
+
+POST /users to create a user.
+POST /users/updateLevel to update level.
+GET /leaderboard to get the top 100 leaderboard.
