@@ -30,6 +30,7 @@ User Progress and A/B Testing:
 Users start with level=1, coins=2000, randomly assigned to A or B group.
 On completing a level, users gain 100 coins and increment their level.
 The random A/B assignment is done once at user creation to support A/B testing.
+
 Pop The Balloon Event Mechanics:
 
 Event Active Time: 08:00 to 22:00 UTC.
@@ -39,11 +40,13 @@ Balloon targets differ by A/B group (1000 for Group A, 1500 for Group B).
 After popping the balloon, both partners can claim a reward (1000 coins for A, 1500 for B).
 Invitations flow: suggest partners, invite, accept, reject.
 Database is updated transactionally to prevent concurrency issues.
+
 Global Leaderboard:
 
 Returns top 100 players by level.
 Indexed queries ensure efficient retrieval under high load.
 By default, the current implementation queries MySQL directly. For higher performance under extreme load, consider caching with Redis or in-memory structures.
+
 Performance and Concurrency Considerations:
 
 Indexed columns (e.g., idx_level on users) to speed up leaderboard queries.
@@ -73,6 +76,7 @@ This starts the Spring Boot application and a MySQL container.
 Database Initialization:
 
 The mysql-db-dump.sql is mounted into the MySQL container and creates the required tables.
+
 Profiles and Configuration:
 
 application.properties for development and application-test.properties for tests (H2 in-memory DB).
